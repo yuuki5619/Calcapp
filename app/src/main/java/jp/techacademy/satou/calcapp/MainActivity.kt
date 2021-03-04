@@ -6,11 +6,12 @@ import android.content.Intent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 
+
+
+class MainActivity : AppCompatActivity() , View.OnClickListener {
     var edit1:Double=0.0
     var edit2:Double=0.0
     var result:Double=0.0
-
-class MainActivity : AppCompatActivity() , View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,72 +30,55 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
 
 
     override fun onClick(v: View) {
-         val zizen1 = edittext1.text.toString()
-         val zizen2 = edittext2.text.toString()
 
-        if ( zizen1.length == 0 && zizen2.length == 0 ) {
+
+        if ( edittext1.text.length == 0 || edittext2.text.length == 0 ) {
             val message = "何か値を入力してください"
             val intent = Intent(this, CalcApp2::class.java)
             intent.putExtra("VALUE2",message)
             startActivity(intent)
         }else {
 
-            result = when (v.id) {
-                R.id.buttonpluss -> { if (zizen1.length == 0 && zizen2.length != 0){
-                    edit2 = edittext2.text.toString().toDouble()
-                    0 + edit2
-                } else if (zizen1.length != 0 && zizen2.length == 0){
-                    edit1 = edittext1.text.toString().toDouble()
-                    edit1 + 0
-                }else{
+            when (v.id) {
+                R.id.buttonpluss -> {
                     edit1 = edittext1.text.toString().toDouble()
                     edit2 = edittext2.text.toString().toDouble()
-                    edit1 + edit2
+                    result = edit1 + edit2
+                    intent1()
                 }
-                }
-                R.id.buttonminass -> { if (zizen1.length == 0 && zizen2.length != 0){
-                    edit2 = edittext2.text.toString().toDouble()
-                    0 - edit2
-                } else if (zizen1.length != 0 && zizen2.length == 0){
-                    edit1 = edittext1.text.toString().toDouble()
-                    edit1 - 0
-                }else {
+                R.id.buttonminass -> {
                     edit1 = edittext1.text.toString().toDouble()
                     edit2 = edittext2.text.toString().toDouble()
-                    edit1 - edit2
+                    result = (edit1 - edit2)
+                    intent1()
                 }
-                }
-                R.id.buttonkakeru -> { if (zizen1.length == 0 && zizen2.length != 0){
-                    edit2 = edittext2.text.toString().toDouble()
-                    0 * edit2
-                } else if (zizen1.length != 0 && zizen2.length == 0){
-                    edit1 = edittext1.text.toString().toDouble()
-                    edit1 * 0
-                }else {
+                R.id.buttonkakeru -> {
                     edit1 = edittext1.text.toString().toDouble()
                     edit2 = edittext2.text.toString().toDouble()
-                    edit1 * edit2
+                    result =  (edit1 * edit2)
+                    intent1()
                 }
-                }
-                R.id.buttonwaru -> { if (zizen1.length == 0 && zizen2.length != 0){
-                    edit2 = edittext2.text.toString().toDouble()
-                    0 / edit2
-                } else if (zizen1.length != 0 && zizen2.length == 0){
-                    edit1 = edittext1.text.toString().toDouble()
-                    edit1 / 0
-                }else {
+                R.id.buttonwaru -> {
                     edit1 = edittext1.text.toString().toDouble()
                     edit2 = edittext2.text.toString().toDouble()
-                    edit1 / edit2
+                    result = (edit1 / edit2)
+                    intent1()
+                }else -> 0.0
+
                 }
-                }
-                else -> 0.0
+
             }
-            val intent = Intent(this, CalcApp2::class.java)
-            intent.putExtra("VALUE", result)
-            startActivity(intent)
+
         }
-        }
+
+    private fun intent1(){
+        val intent1 = Intent(this,CalcApp2::class.java)
+        intent1.putExtra("VALUE",result)
+        startActivity(intent1)
+
+    }
+
+
 
 
 }
